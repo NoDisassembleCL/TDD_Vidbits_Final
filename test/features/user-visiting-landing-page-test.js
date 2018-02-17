@@ -1,6 +1,6 @@
-const {assert} = require('chai');
+const { assert } = require('chai');
 
-describe("User visits landing page", () => { 
+describe("User visits landing page", () => {
 	describe("visits empty landing page", () => { 
 		it("should be empty", () => {
 			browser.url("/");
@@ -11,7 +11,7 @@ describe("User visits landing page", () => {
 		it("can navigate to the create page", () => { 
 			browser.url("/");
 
-			browser.click("a[href='videos/create.html']");
+			browser.click("a[href='videos/create']");
 
 			assert.include(browser.getText("#page-title"), "Save a video");
 		});

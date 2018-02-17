@@ -1,0 +1,16 @@
+<div id="videos-container" class="contents-container">
+	{{#each videos as |video|}}
+		<div class="video-card">
+			<div class="video-player">
+				{{!-- <iframe class="video-player" src="https://www.youtube.com/embed/6lutNECOZFw" frameborder="0" allowfullscreen></iframe> --}}
+			</div>
+			<div class="video-title">
+				{{video.title}}
+			</div>
+		</div>
+	{{/each}}
+</div>
+
+<a href="videos/create">
+	Create a video
+</a>

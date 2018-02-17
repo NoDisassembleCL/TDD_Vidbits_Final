@@ -6,7 +6,7 @@ describe("User visits create page", () => {
 			let title = "Cool Cats";
 			let description = "Cat does something funny. YouTube laughs."
 
-			browser.url("videos/create.html");
+			browser.url("videos/create");
 			browser.setValue("#video-title", title);
 			browser.setValue("#video-description", description);
 			browser.click("#video-submit");

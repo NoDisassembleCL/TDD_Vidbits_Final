@@ -1,14 +1,36 @@
 const {assert} = require('chai');
-const {mongoose, databaseUrl, options} = require('../../database');
 
-async function connectDatabase() {
-  await mongoose.connect(databaseUrl, options);
-  await mongoose.connection.db.dropDatabase();
-}
+const { connectDatabase, disconnectDatabase } = require('../database-utilities');
 
-async function disconnectDatabase() {
-  await mongoose.disconnect();
-}
+const Video = require("../../models/video");
+
+describe('Model: Video', () => {
+	beforeEach(connectDatabase);
+  
+	afterEach(disconnectDatabase);
+
+	describe("title", () => {
+		it("is a String", () => {
+			let titleAsInt = 1;
+			let video = new Video({
+				title: titleAsInt
+			});
+
+			assert.strictEqual(video.title, titleAsInt.toString());
+		});
+	});	
+
+	describe("description", () => {
+		it("is a String", () => {
+			let descAsInt = 1;
+			let video = new Video({
+				description: descAsInt
+			});
+
+			assert.strictEqual(video.description, descAsInt.toString());
+		});
+	});	
+});
 
 module.exports = {
   connectDatabase,
