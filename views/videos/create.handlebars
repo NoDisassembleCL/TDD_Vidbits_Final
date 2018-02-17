@@ -5,12 +5,17 @@
 	<div>
 		<label for="video-title">Title</label>
 		<br />
-		<input type="text" id="video-title" name="title" />
+		<input type="text" id="video-title" name="title" value="{{video.title}}" />
+		{{#with video.errors.title as |error|}}
+        	<span class="error">{{error.message}}</span>
+        {{/with}}
 	</div>
 	<div>
 		<label for="video-description">Description</label>
 		<br />
-		<input type="text" id="video-description" name="description" />
+		<textarea id="video-description" name="description">
+			{{video.description}}
+		</textarea>
 	</div>
 	<div>
 		<input type="submit" id="video-submit" value="Submit Video" />

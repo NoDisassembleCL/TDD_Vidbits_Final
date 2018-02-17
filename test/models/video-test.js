@@ -18,6 +18,16 @@ describe('Model: Video', () => {
 
 			assert.strictEqual(video.title, titleAsInt.toString());
 		});
+
+		it("is required", () => {
+			let video = new Video({
+				description: "Who cares"
+			});
+
+			video.validateSync();
+
+			assert.strictEqual(video.errors.title.message, "Path `title` is required.");
+		});
 	});	
 
 	describe("description", () => {

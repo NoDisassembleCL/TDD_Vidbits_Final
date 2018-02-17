@@ -17,9 +17,16 @@ router.post("/videos", async (req, res) => {
 		description: newDesc
 	});
 
-	await Video.create(createdVideo);
+	createdVideo.validateSync();
 
-	res.render("show", { video: createdVideo });
+	if (createdVideo.errors) { 
+		res.status(400).render("videos/create", { video: createdVideo });
+	}
+	else {
+		await Video.create(createdVideo);
+
+		res.render("show", { video: createdVideo });
+	}	
 });
 
 router.get("/videos/create", (req, res) => {

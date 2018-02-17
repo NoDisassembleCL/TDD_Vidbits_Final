@@ -50,5 +50,40 @@ describe("Server path /videos", () => {
 			assert.include(response.text, video.title);
 			assert.include(response.text, video.description);
 		});
+
+		it("doesn't save video info if title is empty", async () => { 
+			let video = {
+				title: "",
+				description: "Something something kitties."
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			let savedVideos = await Video.find({});
+
+			assert.equal(savedVideos.length, 0);
+		});
+
+		it("responds with error if title is empty", async () => { 
+			let video = {
+				title: "",
+				description: "Something something kitties."
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			assert.equal(response.status, 400);
+		});
+
+		it("preserves description field if title is empty", async () => { 
+			let video = {
+				title: "",
+				description: "Something something kitties."
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			assert.include(response.text, video.description);
+		});
 	});
 });
