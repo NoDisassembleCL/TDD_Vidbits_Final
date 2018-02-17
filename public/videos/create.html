@@ -10,10 +10,23 @@
     <div class="title-container">
       <div class="title-logo">
         <img src="img/logo.svg" alt="">
-	  </div>
-	  <div id="page-title">
-		  Save a video
-	  </div>
+      </div>
+      <div id="page-title">
+        Save a video
+      </div>
+      <form id="video-form" method="POST" action="/videos">
+        <div>
+          <label for="video-title">Title</label><br />
+          <input type="text" id="video-title" name="video-title" />
+        </div>
+        <div>
+          <label for="video-description">Description</label><br />
+          <input type="text" id="video-description" name="video-description" />
+        </div>
+        <div>
+          <input type="submit" id="video-submit" value="Submit Video" />
+        </div>
+      </form>
     </div>
   </body>
 </html>
