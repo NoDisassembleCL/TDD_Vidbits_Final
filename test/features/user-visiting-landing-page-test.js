@@ -1,5 +1,15 @@
 const { assert } = require('chai');
 
+const { generateRandomUrl } = require("../test-utils");
+
+const fillAndClick = (createdVideo) => {
+	browser.url("videos/create");
+	browser.setValue("#video-title", createdVideo.title);
+	browser.setValue("#video-description", createdVideo.description);
+	browser.setValue("#video-url", createdVideo.videoUrl);
+	browser.click("#video-submit");
+ };
+
 describe("User visits landing page", () => {
 	describe("visits empty landing page", () => { 
 		it("should be empty", () => {
@@ -14,6 +24,36 @@ describe("User visits landing page", () => {
 			browser.click("a[href='videos/create']");
 
 			assert.include(browser.getText("#page-title"), "Save a video");
+		});
+	});
+
+	describe("visits landing page with existing video", () => {
+		it("page contains the video", () => {
+			let createdVideo = {
+				title: "Cool Cats",
+				description: "Something something kitties.",
+				videoUrl: generateRandomUrl()
+			};
+
+			fillAndClick(createdVideo);
+
+			browser.url("/");
+			assert.equal(browser.getAttribute("iframe:last-child", "src"), createdVideo.videoUrl);
+		});
+		
+		it("can navigate to video", () => { 
+			let createdVideo = {
+				title: "Cool Cats",
+				description: "Something something kitties.",
+				videoUrl: generateRandomUrl()
+			};
+
+			fillAndClick(createdVideo);
+	
+			browser.url("/");
+			browser.click("a.show-video:last-child");
+
+			assert.equal(browser.getText("h1"), createdVideo.title);
 		});
 	});
 });

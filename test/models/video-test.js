@@ -39,7 +39,28 @@ describe('Model: Video', () => {
 
 			assert.strictEqual(video.description, descAsInt.toString());
 		});
-	});	
+	});
+
+	describe("videoUrl", () => {
+		it("is a String", () => {
+			let videoUrlAsInt = 1;
+			let video = new Video({
+				videoUrl: videoUrlAsInt
+			});
+
+			assert.strictEqual(video.videoUrl, videoUrlAsInt.toString());
+		});
+		
+		it("is required", () => {
+			let video = new Video({
+				title: "title"
+			});
+
+			video.validateSync();
+
+			assert.strictEqual(video.errors.videoUrl.message, "A url is required");
+		});
+	 });
 });
 
 module.exports = {

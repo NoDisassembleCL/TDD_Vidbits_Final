@@ -8,20 +8,19 @@ const Video = require("../../models/video");
 const { connectDatabase, disconnectDatabase } = require('../database-utilities');
 const { seedDatabase } = require("../test-utils");
 
-describe("Server path /videos", () => {
+describe("Server path /videos/:id", () => {
 	beforeEach(connectDatabase);
   
 	afterEach(disconnectDatabase);
 
 	describe("GET", () => {
-		it("renders video already added", async () => {
+		it("displays the video", async () => { 
 			let seededVideo = await seedDatabase();
 
-			let response = await request(app).get("/");
+			let response = await request(app).get(`/videos/${seededVideo._id}`);
 
-			assert.equal(response.status, 200);
 			assert.include(response.text, seededVideo.title);
 			assert.include(response.text, seededVideo.videoUrl);
 		});
-	});
+	 });
 });

@@ -7,7 +7,11 @@ const Video = mongoose.model(
 		  type: String,
 		  required: true
 	  },
-	  description: String  
+	  description: String,
+	  videoUrl: {
+		  type: String,
+		  required: [ true, "A url is required" ]
+	  }
   })
 );
 
