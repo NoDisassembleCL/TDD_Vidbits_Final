@@ -13,8 +13,8 @@
 	<div>
 		<label for="video-url">Video Url
 		<br />
-		<input type="text" id="video-url" name="videoUrl" value="{{ newVideo.videoUrl }}" />
-		{{#with newVideo.errors.videoUrl as |error|}}
+		<input type="text" id="video-url" name="url" value="{{ newVideo.url }}" />
+		{{#with newVideo.errors.url as |error|}}
         	<span class="error">{{error.message}}</span>
         {{/with}}
 	</div>
@@ -26,6 +26,6 @@
 		</textarea>
 	</div>
 	<div>
-		<input type="submit" id="video-submit" value="Submit Video" />
+		<input class="input-button" type="submit" id="video-submit" value="Submit Video" />
 	</div>
 </form>

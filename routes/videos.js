@@ -15,12 +15,12 @@ router.get("/videos/create", (req, res) => {
 router.post("/videos", async (req, res) => {
 	let newTitle = req.body.title;
 	let newDesc = req.body.description;
-	let newUrl = req.body.videoUrl;
+	let newUrl = req.body.url;
 
 	let createdVideo = new Video({
 		title: newTitle,
 		description: newDesc,
-		videoUrl: newUrl
+		url: newUrl
 	});
 
 	createdVideo.validateSync();
@@ -50,12 +50,12 @@ router.get("/videos/:videoId/edit", async (req, res) => {
 router.post("/videos/:videoId/updates", async (req, res) => { 
 	let updatedTitle = req.body.title;
 	let updatedDesc = req.body.description;
-	let updatedUrl = req.body.videoUrl;
+	let updatedUrl = req.body.url;
 
 	let updatedVideo = new Video({
 		title: updatedTitle,
 		description: updatedDesc,
-		videoUrl: updatedUrl
+		url: updatedUrl
 	});
 
 	updatedVideo.validateSync();
@@ -67,7 +67,7 @@ router.post("/videos/:videoId/updates", async (req, res) => {
 		await Video.findByIdAndUpdate(req.params.videoId, {
 			title: updatedTitle,
 			description: updatedDesc,
-			videoUrl: updatedUrl
+			url: updatedUrl
 		}, () => {
 			res.redirect(`/videos/${req.params.videoId}`);
 		});

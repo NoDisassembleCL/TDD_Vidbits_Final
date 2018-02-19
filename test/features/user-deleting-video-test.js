@@ -9,7 +9,7 @@ describe("User visits single video page", () => {
 			let createdVideo = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			fillAndClick(createdVideo);

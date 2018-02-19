@@ -14,23 +14,11 @@ describe("Server path /videos", () => {
 	afterEach(disconnectDatabase);
 
 	describe("POST", () => {
-		it("responds with an OK status", async () => {
-			let video = {
-				title: "Cool Cats",
-				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
-			};
-
-			let response = await request(app).post("/videos").type("form").send(video);
-
-			assert.strictEqual(response.status, 302);
-		});
-
 		it("saves video to the database", async () => {
 			let video = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
@@ -40,14 +28,14 @@ describe("Server path /videos", () => {
 			assert.isNotNull(savedVideo);
 			assert.equal(savedVideo.title, video.title);
 			assert.equal(savedVideo.description, video.description);
-			assert.equal(savedVideo.videoUrl, video.videoUrl);
+			assert.equal(savedVideo.url, video.url);
 		});
 
 		it("returns redirect to new vids page on success", async () => {
 			let video = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
@@ -60,7 +48,7 @@ describe("Server path /videos", () => {
 			let video = {
 				title: "",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
@@ -74,7 +62,7 @@ describe("Server path /videos", () => {
 			let video = {
 				title: "",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
@@ -86,7 +74,7 @@ describe("Server path /videos", () => {
 			let video = {
 				title: "",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
@@ -98,12 +86,62 @@ describe("Server path /videos", () => {
 			let video = {
 				title: "",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post("/videos").type("form").send(video);
 
-			assert.include(response.text, video.videoUrl);
+			assert.include(response.text, video.url);
+		});
+
+		it("doesn't save video info if url is empty", async () => { 
+			let video = {
+				title: "Some cool title",
+				description: "Something something kitties.",
+				url: ""
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			let savedVideos = await Video.find({});
+
+			assert.equal(savedVideos.length, 0);
+		});
+
+		it("responds with error if url is empty", async () => { 
+			let video = {
+				title: "Some cool title",
+				description: "Something something kitties.",
+				url: ""
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			assert.equal(response.status, 400);
+		});
+
+		it("preserves description field if url is empty", async () => { 
+			let video = {
+				title: "Some cool title",
+				description: "Something something kitties.",
+				url: ""
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			assert.include(response.text, video.description);
+		});
+
+		it("preserves title field if url is empty", async () => { 
+			let video = {
+				title: "Some cool title",
+				description: "Something something kitties.",
+				url: ""
+			};
+
+			let response = await request(app).post("/videos").type("form").send(video);
+
+			assert.include(response.text, video.title);
 		});
 	});
 });

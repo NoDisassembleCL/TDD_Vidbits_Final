@@ -14,13 +14,14 @@ describe("Server path /videos/:id", () => {
 	afterEach(disconnectDatabase);
 
 	describe("GET", () => {
-		it("displays the video", async () => { 
+		it("displays the video details", async () => { 
 			let seededVideo = await seedDatabase();
 
 			let response = await request(app).get(`/videos/${seededVideo._id}`);
 
 			assert.include(response.text, seededVideo.title);
-			assert.include(response.text, seededVideo.videoUrl);
+			assert.include(response.text, seededVideo.description);
+			assert.include(response.text, seededVideo.url);
 		});
 	 });
 });

@@ -21,7 +21,7 @@ describe("Server path /videos", () => {
 
 			assert.equal(response.status, 200);
 			assert.include(response.text, seededVideo.title);
-			assert.include(response.text, seededVideo.videoUrl);
+			assert.include(response.text, seededVideo.url);
 		});
 	});
 });

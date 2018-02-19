@@ -24,20 +24,20 @@ describe("User visits landing page", () => {
 			let createdVideo = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			fillAndClick(createdVideo);
 
 			browser.url("/");
-			assert.equal(browser.getAttribute("iframe:last-child", "src"), createdVideo.videoUrl);
+			assert.equal(browser.getAttribute("iframe:last-child", "src"), createdVideo.url);
 		});
 		
 		it("can navigate to video", () => { 
 			let createdVideo = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			fillAndClick(createdVideo);

@@ -9,7 +9,7 @@ describe("User visits update page", () => {
 			let createdVideo = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 			let updatedTitle = "Not-so-cool kitties";
 			let updatedDescription = "Kitties something else.";
@@ -30,7 +30,7 @@ describe("User visits update page", () => {
 			let createdVideo = {
 				title: "Cool Cats",
 				description: "Something something kitties.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 			let updatedTitle = "Not-so-cool kitties";
 			let updatedDescription = "Kitties something else.";

@@ -2,16 +2,16 @@
 	{{#each videos as |video|}}
 		<div class="video-card">
 			<div class="video-player">
-				<iframe class="video-player" src="{{video.videoUrl}}" frameborder="0" allowfullscreen></iframe>
+				<iframe class="video-player" src="{{video.url}}" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<div class="video-title">
 				{{video.title}}
 			</div>
-			<div><a href="/videos/{{video._id}}" class="show-video">View Video</a></div>
+			<div><a href="/videos/{{video._id}}" class="add-video-button show-video">View Video</a></div>
 		</div>
 	{{/each}}
 </div>
 
-<a href="videos/create">
+<a class="add-video-button" href="videos/create">
 	Create a video
 </a>

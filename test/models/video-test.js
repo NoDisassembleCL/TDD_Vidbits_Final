@@ -41,14 +41,14 @@ describe('Model: Video', () => {
 		});
 	});
 
-	describe("videoUrl", () => {
+	describe("url", () => {
 		it("is a String", () => {
-			let videoUrlAsInt = 1;
+			let urlAsInt = 1;
 			let video = new Video({
-				videoUrl: videoUrlAsInt
+				url: urlAsInt
 			});
 
-			assert.strictEqual(video.videoUrl, videoUrlAsInt.toString());
+			assert.strictEqual(video.url, urlAsInt.toString());
 		});
 		
 		it("is required", () => {
@@ -58,7 +58,7 @@ describe('Model: Video', () => {
 
 			video.validateSync();
 
-			assert.strictEqual(video.errors.videoUrl.message, "A url is required");
+			assert.strictEqual(video.errors.url.message, "A url is required");
 		});
 	 });
 });

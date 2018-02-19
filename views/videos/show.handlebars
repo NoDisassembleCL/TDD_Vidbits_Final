@@ -6,7 +6,7 @@
     </div>
 
     <div class="video-player">
-		<iframe class="video-player" src="{{foundVideo.videoUrl}}" frameborder="0" allowfullscreen></iframe>
+		<iframe class="video-player" src="{{foundVideo.url}}" frameborder="0" allowfullscreen></iframe>
 	</div>
 
     <div class="video-description">
@@ -14,9 +14,9 @@
     </div>
 
 	<div>
-		<button><a id="video-edit" href="/videos/{{ foundVideo._id }}/edit">Edit</a></button>
+		<button class="input-button"><a id="video-edit" href="/videos/{{ foundVideo._id }}/edit">Edit</a></button>
 		<form method="post" action="/videos/{{ foundVideo._id }}/deletions">
-			<input id="video-delete" type="submit" value="Delete" />
+			<input class="input-button" id="video-delete" type="submit" value="Delete" />
 		</form>
 	</div>
   </div>

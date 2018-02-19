@@ -36,7 +36,7 @@ describe("Server path: /videos/:id/updates", () => {
 			let updates = {
 				title: "Not-so-cool kitties",
 				description: "Kitties something else.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
@@ -46,7 +46,7 @@ describe("Server path: /videos/:id/updates", () => {
 			assert.isNotNull(updatedVideo);
 			assert.equal(updatedVideo.title, updates.title);
 			assert.equal(updatedVideo.description, updates.description);
-			assert.equal(updatedVideo.videoUrl, updates.videoUrl);
+			assert.equal(updatedVideo.url, updates.url);
 		});
 		
 		it("redirects to show page on success", async () => {
@@ -54,7 +54,7 @@ describe("Server path: /videos/:id/updates", () => {
 			let updates = {
 				title: "Not-so-cool kitties",
 				description: "Kitties something else.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
@@ -68,7 +68,7 @@ describe("Server path: /videos/:id/updates", () => {
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
@@ -84,7 +84,36 @@ describe("Server path: /videos/:id/updates", () => {
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
+			};
+
+			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
+
+			assert.equal(response.status, 400);
+		});
+
+		it("does not update video if url is empty", async () => { 
+			let seededVideo = await seedDatabase();
+			let updates = {
+				title: "Some cool title",
+				description: "Kitties something else.",
+				url: ""
+			};
+
+			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
+
+			let updatedVideo = await Video.findById(seededVideo._id);
+
+			assert.isNotNull(updatedVideo);
+			assert.equal(updatedVideo.url, seededVideo.url);
+		});
+
+		it("responds with error if url is empty", async () => { 
+			let seededVideo = await seedDatabase();
+			let updates = {
+				title: "Some cool title",
+				description: "Kitties something else.",
+				url: ""
 			};
 
 			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
@@ -97,12 +126,53 @@ describe("Server path: /videos/:id/updates", () => {
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
-				videoUrl: generateRandomUrl()
+				url: generateRandomUrl()
 			};
 
 			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
 
 			assert.include(response.text, 'id="video-title"');
+		});
+		
+		it("re-shows edit form if url is empty", async () => {
+			let seededVideo = await seedDatabase();
+			let updates = {
+				title: "Some cool title",
+				description: "Kitties something else.",
+				url: ""
+			};
+
+			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
+
+			assert.include(response.text, 'id="video-title"');
+		});
+		
+		it("perserves other values if title is empty", async () => {
+			let seededVideo = await seedDatabase();
+			let updates = {
+				title: "",
+				description: "Kitties something else.",
+				url: generateRandomUrl()
+			};
+
+			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
+
+			assert.include(response.text, updates.description);
+			assert.include(response.text, updates.url);
+		});
+		
+		it("preserves other values if url is empty", async () => {
+			let seededVideo = await seedDatabase();
+			let updates = {
+				title: "Some cool title",
+				description: "Kitties something else.",
+				url: ""
+			};
+
+			let response = await request(app).post(`/videos/${seededVideo._id}/updates`).type("form").send(updates);
+
+			assert.include(response.text, updates.description);
+			assert.include(response.text, updates.title);
 		 });
 	});
 });
