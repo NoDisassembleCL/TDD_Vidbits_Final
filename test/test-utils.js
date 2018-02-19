@@ -16,7 +16,16 @@ const generateRandomUrl = (domain) => {
 	return `http://${domain}/${Math.random()}`;
 };
 
+const fillAndClick = (createdVideo) => {
+	browser.url("videos/create");
+	browser.setValue("#video-title", createdVideo.title);
+	browser.setValue("#video-description", createdVideo.description);
+	browser.setValue("#video-url", createdVideo.videoUrl);
+	browser.click("#video-submit");
+ };
+
 module.exports = {
 	seedDatabase,
-	generateRandomUrl
+	generateRandomUrl,
+	fillAndClick
 };

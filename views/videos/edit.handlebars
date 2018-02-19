@@ -1,0 +1,31 @@
+<div id="page-title">
+	Update a video
+</div>
+<form id="video-form" method="POST" action="/videos/{{ newVideo._id }}/updates">
+	<div>
+		<label for="video-title">Title</label>
+		<br />
+		<input type="text" id="video-title" name="title" value="{{newVideo.title}}" />
+		{{#with newVideo.errors.title as |error|}}
+        	<span class="error">{{error.message}}</span>
+        {{/with}}
+	</div>
+	<div>
+		<label for="video-url">Video Url
+		<br />
+		<input type="text" id="video-url" name="videoUrl" value="{{ newVideo.videoUrl }}" />
+		{{#with newVideo.errors.videoUrl as |error|}}
+        	<span class="error">{{error.message}}</span>
+        {{/with}}
+	</div>
+	<div>
+		<label for="video-description">Description</label>
+		<br />
+		<textarea id="video-description" name="description">
+			{{newVideo.description}}
+		</textarea>
+	</div>
+	<div>
+		<input type="submit" id="video-submit" value="Submit Video" />
+	</div>
+</form>

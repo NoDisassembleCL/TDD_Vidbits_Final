@@ -1,14 +1,6 @@
 const { assert } = require('chai');
 
-const { generateRandomUrl } = require("../test-utils");
-
-const fillAndClick = (createdVideo) => {
-	browser.url("videos/create");
-	browser.setValue("#video-title", createdVideo.title);
-	browser.setValue("#video-description", createdVideo.description);
-	browser.setValue("#video-url", createdVideo.videoUrl);
-	browser.click("#video-submit");
- };
+const { generateRandomUrl, fillAndClick } = require("../test-utils");
 
 describe("User visits landing page", () => {
 	describe("visits empty landing page", () => { 

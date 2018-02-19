@@ -41,4 +41,43 @@ router.get("/videos/:videoId", async (req, res) => {
 	res.render("videos/show", { foundVideo: videoToShow });
 });
 
+router.get("/videos/:videoId/edit", async (req, res) => {
+	let videoToShow = await Video.findById(req.params.videoId);
+
+	res.render("videos/edit", { newVideo: videoToShow });
+});
+ 
+router.post("/videos/:videoId/updates", async (req, res) => { 
+	let updatedTitle = req.body.title;
+	let updatedDesc = req.body.description;
+	let updatedUrl = req.body.videoUrl;
+
+	let updatedVideo = new Video({
+		title: updatedTitle,
+		description: updatedDesc,
+		videoUrl: updatedUrl
+	});
+
+	updatedVideo.validateSync();
+
+	if (updatedVideo.errors) {
+		res.status(400).render("videos/edit", { newVideo: updatedVideo });
+	}
+	else {
+		await Video.findByIdAndUpdate(req.params.videoId, {
+			title: updatedTitle,
+			description: updatedDesc,
+			videoUrl: updatedUrl
+		}, () => {
+			res.redirect(`/videos/${req.params.videoId}`);
+		});
+	}	
+});
+
+router.post("/videos/:videoId/deletions", async (req, res) => {
+	await Video.findByIdAndRemove(req.params.videoId);
+
+	res.redirect("/");
+ });
+
 module.exports = router;
