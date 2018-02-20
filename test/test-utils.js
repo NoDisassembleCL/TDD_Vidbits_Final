@@ -1,6 +1,7 @@
 const Video = require("../models/video");
+const Comment = require("../models/comment");
 
-async function seedDatabase() {
+async function seedVideoToDatabase() {
 	let createdVideo = new Video({
 		title: "Who let the dogs out?",
 		description: "Who, who, who, who",
@@ -10,6 +11,17 @@ async function seedDatabase() {
 	await Video.create(createdVideo);
 
 	return createdVideo;
+}
+
+async function seedCommentToDatabase( videoId ) {
+	let createdComment = new Comment({
+		videoId: videoId,
+		text: "This video was the best evar."
+	});
+
+	await Comment.create(createdComment);
+
+	return createdComment;
 }
 
 const generateRandomUrl = (domain) => {
@@ -25,7 +37,8 @@ const fillAndClick = (createdVideo) => {
  };
 
 module.exports = {
-	seedDatabase,
+	seedVideoToDatabase,
+	seedCommentToDatabase,
 	generateRandomUrl,
 	fillAndClick
 };

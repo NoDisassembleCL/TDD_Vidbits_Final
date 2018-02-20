@@ -6,7 +6,7 @@ const app = require('../../app');
 const Video = require("../../models/video");
 
 const { connectDatabase, disconnectDatabase } = require('../database-utilities');
-const { seedDatabase } = require("../test-utils");
+const { seedVideoToDatabase } = require("../test-utils");
 
 describe("Server path /videos", () => {
 	beforeEach(connectDatabase);
@@ -15,7 +15,7 @@ describe("Server path /videos", () => {
 
 	describe("GET", () => {
 		it("renders video already added", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 
 			let response = await request(app).get("/");
 

@@ -60,7 +60,7 @@ describe('Model: Video', () => {
 
 			assert.strictEqual(video.errors.url.message, "A url is required");
 		});
-	 });
+	});
 });
 
 module.exports = {

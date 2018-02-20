@@ -6,7 +6,7 @@ const app = require('../../app');
 const Video = require("../../models/video");
 
 const { connectDatabase, disconnectDatabase } = require('../database-utilities');
-const { seedDatabase, generateRandomUrl } = require("../test-utils");
+const { seedVideoToDatabase, generateRandomUrl } = require("../test-utils");
 
 describe("Server path /videos", () => {
 	beforeEach(connectDatabase);

@@ -6,7 +6,7 @@ const app = require('../../app');
 const Video = require("../../models/video");
 
 const { connectDatabase, disconnectDatabase } = require('../database-utilities');
-const { seedDatabase, generateRandomUrl } = require("../test-utils");
+const { seedVideoToDatabase, generateRandomUrl } = require("../test-utils");
 
 describe("Server path: /videos/:id/edit", () => { 
 	beforeEach(connectDatabase);
@@ -15,7 +15,7 @@ describe("Server path: /videos/:id/edit", () => {
 
 	describe("GET", () => { 
 		it("displays a form to update the video", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 
 			let response = await request(app).get(`/videos/${seededVideo._id}/edit`);
 			
@@ -32,7 +32,7 @@ describe("Server path: /videos/:id/updates", () => {
 
 	describe("POST", () => { 
 		it("updates the video in the database", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Not-so-cool kitties",
 				description: "Kitties something else.",
@@ -50,7 +50,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 		
 		it("redirects to show page on success", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Not-so-cool kitties",
 				description: "Kitties something else.",
@@ -64,7 +64,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 		
 		it("does not update video if title is empty", async () => { 
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
@@ -80,7 +80,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 
 		it("responds with error if title is empty", async () => { 
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
@@ -93,7 +93,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 
 		it("does not update video if url is empty", async () => { 
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Some cool title",
 				description: "Kitties something else.",
@@ -109,7 +109,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 
 		it("responds with error if url is empty", async () => { 
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Some cool title",
 				description: "Kitties something else.",
@@ -122,7 +122,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 
 		it("re-shows edit form if title is empty", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
@@ -135,7 +135,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 		
 		it("re-shows edit form if url is empty", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Some cool title",
 				description: "Kitties something else.",
@@ -148,7 +148,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 		
 		it("perserves other values if title is empty", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "",
 				description: "Kitties something else.",
@@ -162,7 +162,7 @@ describe("Server path: /videos/:id/updates", () => {
 		});
 		
 		it("preserves other values if url is empty", async () => {
-			let seededVideo = await seedDatabase();
+			let seededVideo = await seedVideoToDatabase();
 			let updates = {
 				title: "Some cool title",
 				description: "Kitties something else.",

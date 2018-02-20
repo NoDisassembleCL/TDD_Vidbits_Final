@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const Video = require('../models/video');
+const Comment = require("../models/comment");
  
 router.get("/", async (req, res) => {
 	let videos = await Video.find({});
@@ -37,8 +38,9 @@ router.post("/videos", async (req, res) => {
 
 router.get("/videos/:videoId", async (req, res) => { 
 	let videoToShow = await Video.findById(req.params.videoId);
+	let commentsToShow = await Comment.find({ videoId: req.params.videoId });
 
-	res.render("videos/show", { foundVideo: videoToShow });
+	res.render("videos/show", { foundVideo: videoToShow, comments: commentsToShow, commentError: req.query.ce });
 });
 
 router.get("/videos/:videoId/edit", async (req, res) => {
@@ -78,6 +80,26 @@ router.post("/videos/:videoId/deletions", async (req, res) => {
 	await Video.findByIdAndRemove(req.params.videoId);
 
 	res.redirect("/");
- });
+});
+ 
+router.post("/videos/:videoId/addcomment", async (req, res) => {
+	let newComment = req.body.commentText;
+
+	let createdComment = new Comment({
+		videoId: req.params.videoId,
+		text: newComment
+	});
+
+	createdComment.validateSync();
+
+	if (createdComment.errors) {
+		res.redirect(`/videos/${req.params.videoId}?ce=true`, 400);
+	}
+	else {
+		await Comment.create(createdComment);
+	
+		res.redirect(`/videos/${req.params.videoId}`);
+	}	
+});
 
 module.exports = router;
